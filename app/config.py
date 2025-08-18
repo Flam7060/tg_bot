@@ -1,4 +1,5 @@
 from pathlib import Path
+
 from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
@@ -34,10 +35,27 @@ class ApiNinjasConfig(ConfigBase):
     api_key: SecretStr
 
 
+class ThecatapiConfig(ConfigBase):
+    """
+    Апи с котиками!!
+    """
+
+    model_config = SettingsConfigDict(env_prefix="thecat_")
+    base_url: str = "https://api.thecatapi.com/v1/"
+    api_key: SecretStr
+
+
+3
+
+
 class Config(BaseSettings):
     telegram: TelegramConfig = Field(default_factory=TelegramConfig)
     ninja: ApiNinjasConfig = Field(default_factory=ApiNinjasConfig)
+    cat: ThecatapiConfig = Field(default_factory=ThecatapiConfig)
 
     @classmethod
     def load(cls) -> "Config":
         return cls()
+
+
+configs = Config()

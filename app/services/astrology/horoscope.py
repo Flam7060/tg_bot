@@ -23,12 +23,13 @@ class HoroscopeApiClient(BaseApiClient):
             return None
 
 
-horoscop = HoroscopeApiClient(
-    configs.ninja.base_url, configs.ninja.api_key.get_secret_value()
-)
-horoscope_response = horoscop.get_horoscope(ZodiacSign.leo)
-if horoscope_response is not None:
-    translated_text = translate_text(horoscope_response.horoscope, target_lang="ru")
-    print(translated_text)
-else:
-    print("Гороскоп не получен")
+if "name" == "__main__":
+    horoscop = HoroscopeApiClient(
+        configs.ninja.base_url, configs.ninja.api_key.get_secret_value()
+    )
+    horoscope_response = horoscop.get_horoscope(ZodiacSign.leo)
+    if horoscope_response is not None:
+        translated_text = translate_text(horoscope_response.horoscope, target_lang="ru")
+        print(translated_text)
+    else:
+        print("Гороскоп не получен")

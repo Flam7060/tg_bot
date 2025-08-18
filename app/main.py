@@ -1,11 +1,9 @@
 import asyncio
 from aiogram import Bot
 from app.bot.create_bot import dp
-from app.config import Config
-from app.bot.handlers import horoscope
+from app.bot.handlers import horoscope, get_cat
+from app.config import configs
 
-
-configs = Config()
 
 bot = Bot(token=configs.telegram.bot_token.get_secret_value())
 
@@ -13,7 +11,7 @@ bot = Bot(token=configs.telegram.bot_token.get_secret_value())
 async def main():
     try:
         await bot.delete_webhook(drop_pending_updates=True)
-        
+
         print("Бот запускается...")
         await dp.start_polling(bot)
     finally:
