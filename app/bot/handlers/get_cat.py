@@ -2,7 +2,7 @@ from aiogram.filters import Command
 from aiogram.types import Message, URLInputFile
 from app.bot.create_bot import dp
 from app.config import configs
-from app.services.the_cat.get_cat import CatApiClient
+from app.services.get_animals.get_cat import CatApiClient
 
 
 @dp.message(Command("get_cat"))

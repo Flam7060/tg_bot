@@ -45,13 +45,21 @@ class ThecatapiConfig(ConfigBase):
     api_key: SecretStr
 
 
-3
+class ThedogapiConfig(ConfigBase):
+    """
+    Апи с сябяками!!
+    """
+
+    model_config = SettingsConfigDict(env_prefix="thedog_")
+    base_url: str = "https://api.thedogapi.com/v1/"
+    api_key: SecretStr
 
 
 class Config(BaseSettings):
     telegram: TelegramConfig = Field(default_factory=TelegramConfig)
     ninja: ApiNinjasConfig = Field(default_factory=ApiNinjasConfig)
     cat: ThecatapiConfig = Field(default_factory=ThecatapiConfig)
+    dog: ThedogapiConfig = Field(default_factory=ThedogapiConfig)
 
     @classmethod
     def load(cls) -> "Config":
