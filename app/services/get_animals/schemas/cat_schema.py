@@ -1,4 +1,4 @@
-from pydantic import BaseModel, AnyUrl
+from pydantic import BaseModel
 
 # Example {'breeds': [], 'id': '2oe', 'url': 'https://cdn2.thecatapi.com/images/2oe.jpg', 'width': 500, 'height': 332}
 

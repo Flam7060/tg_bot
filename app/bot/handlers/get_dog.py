@@ -1,11 +1,22 @@
-from aiogram.filters import Command
+from aiogram import F
 from aiogram.types import Message, URLInputFile
 from app.bot.create_bot import dp
 from app.config import configs
 from app.services.get_animals.get_dog import DogApiClient
 
 
-@dp.message(Command("get_dog"))
+Dogs_Words = ["сабаку", "сябаку", "пса", "собаку", "собачку", "псину"]
+Names_Bot = ["леха", "алексей"]
+
+
+def contains_bot_and_dog(text: str) -> bool:
+    text_lower = text.lower()
+    bot_in_text = any(name.lower() in text_lower for name in Names_Bot)
+    dog_in_text = any(dog_word.lower() in text_lower for dog_word in Dogs_Words)
+    return bot_in_text and dog_in_text
+
+
+@dp.message(F.text.func(contains_bot_and_dog))
 async def get_dog_handler(message: Message):
     dog = DogApiClient(configs.dog.base_url, configs.dog.api_key.get_secret_value())
     try:

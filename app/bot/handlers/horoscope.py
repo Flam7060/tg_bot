@@ -1,4 +1,4 @@
-from aiogram.filters import Command, CommandStart
+from aiogram.filters import Command
 from aiogram.types import CallbackQuery, Message
 from app.bot.create_bot import dp
 from app.bot.keyboards.horoscope import zodiac_keyboard

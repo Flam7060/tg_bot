@@ -2,7 +2,7 @@ from typing import Optional
 from app.main import configs
 from app.services.base_api import BaseApiClient
 from app.services.astrology.schemas import HoroscopeResponse, ZodiacSign
-from app.services.utils.translator import translate_output, translate_text
+from app.services.utils.translator import translate_text
 
 
 class HoroscopeApiClient(BaseApiClient):
