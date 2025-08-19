@@ -1,0 +1,24 @@
+name: linter
+
+on: [push, pull_request]
+#  Я не уверен что здесь нужен Ruff, он вроде есть в megalinter 
+jobs:
+
+  ruff:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - uses: astral-sh/ruff-action@v3
+      with:
+        args: check .
+        fix_args: fix .
+
+  megalinter:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: Run MegaLinter
+      uses: oxsecurity/megalinter@v8.8.0
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
