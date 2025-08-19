@@ -1,9 +1,9 @@
 name: linter
 
 on: [push, pull_request]
-
-jobs:
 #  Я не уверен что здесь нужен Ruff, он вроде есть в megalinter 
+jobs:
+
   ruff:
     runs-on: ubuntu-latest
     steps:
