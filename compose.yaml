@@ -5,3 +5,17 @@ services:
     volumes:
       - .:/src
     restart: always
+    security_opt:
+      - no-new-privileges:true
+    user: "1000:1000"
+    env_file:
+      - .env
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "curl -f https://api.telegram.org/bot${tg_bot_token}/getMe || exit 1",
+        ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
