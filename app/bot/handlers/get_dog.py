@@ -1,11 +1,13 @@
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message, URLInputFile
-from app.bot.create_bot import dp
 from app.config import configs
 from app.services.get_animals.get_dog import DogApiClient
 
+router = Router()
 
-@dp.message(Command("get_dog"))
+
+@router.message(Command("get_dog"))
 async def get_dog_handler(message: Message):
     dog = DogApiClient(configs.dog.base_url, configs.dog.api_key.get_secret_value())
     try:

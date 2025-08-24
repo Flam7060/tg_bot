@@ -1,14 +1,16 @@
-from aiogram.filters import Command, CommandStart
+from aiogram import Router
+from aiogram.filters import Command
 from aiogram.types import CallbackQuery, Message
-from app.bot.create_bot import dp
 from app.bot.keyboards.horoscope import zodiac_keyboard
 from app.config import configs
 from app.services.astrology.schemas import ZodiacSign
 from app.services.astrology.horoscope import HoroscopeApiClient
 from app.services.utils.translator import translate_text
 
+router = Router()
 
-@dp.message(Command("horoscop"))
+
+@router.message(Command("horoscop"))
 async def get_horoscope(message: Message):
     user_mention = message.from_user.first_name
     print(user_mention)
@@ -20,7 +22,7 @@ async def get_horoscope(message: Message):
     await message.answer(text, reply_markup=keyboard)
 
 
-@dp.callback_query(lambda c: c.data and c.data.startswith("zodiac_"))
+@router.callback_query(lambda c: c.data and c.data.startswith("zodiac_"))
 async def zodiac_button_handler(callback_query: CallbackQuery):
     sign_str = callback_query.data.split("_")[1]
     sign = ZodiacSign(sign_str.capitalize())

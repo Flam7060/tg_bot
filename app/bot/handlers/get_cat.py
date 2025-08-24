@@ -1,11 +1,13 @@
+from aiogram import Router
 from aiogram.filters import Command
 from aiogram.types import Message, URLInputFile
-from app.bot.create_bot import dp
 from app.config import configs
 from app.services.get_animals.get_cat import CatApiClient
 
+router = Router()
 
-@dp.message(Command("get_cat"))
+
+@router.message(Command("get_cat"))
 async def get_cat_handler(message: Message):
     cat = CatApiClient(configs.cat.base_url, configs.cat.api_key.get_secret_value())
     try:
