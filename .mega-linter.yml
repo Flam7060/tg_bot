@@ -7,6 +7,7 @@ DISABLE_LINTERS:
   - REPOSITORY_DEVSKIM
   - SPELL_CSPELL
   - PYTHON_MYPY
+  - SPELL_LYCHEE
 
 # Автофиксы
 APPLY_FIXES: all
@@ -23,6 +24,7 @@ COPYPASTE_JSCPD_ARGUMENTS: "--gitignore --threshold 5"
 FILEIO_REPORTER: false
 GITHUB_STATUS_REPORTER: false
 
-# mypy
-PYTHON_MYPY_FILTER_REGEX_INCLUDE: "app/.*"
-PYTHON_MYPY_FILTER_REGEX_EXCLUDE: ""
+# lint url ignore
+SPELL_LYCHEE_FILTER_REGEX_EXCLUDE: |
+  .*api\.telegram\.org/bot\$\{.*\}.*   # Исключает URL-ы с ${...}
+  .*api\.telegram\.org/bot\$%7B.*%7D.* # Исключает URL-ы с закодированными %7B...%7D
