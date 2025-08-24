@@ -1,6 +1,6 @@
-from pydantic import ValidationError
-from app.services.get_animals.schemas.dog_schema import DogInfo
 from app.services.base_api import BaseApiClient
+from app.services.get_animals.schemas.dog_schema import DogInfo
+from pydantic import ValidationError
 
 
 class DogApiClient(BaseApiClient):

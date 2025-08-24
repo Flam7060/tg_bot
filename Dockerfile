@@ -1,20 +1,21 @@
-# Используем официальный образ uv с Python 3.12
 FROM python:3.12-slim-trixie
+
+RUN useradd -m appuser
+
 COPY --from=ghcr.io/astral-sh/uv:latest /uv /uvx /bin/
 
-# Рабочая папка, в которую копируем проект
 WORKDIR /src
 
-# Копируем весь проект сюда
 COPY . .
 
-# Добавляем /src в PYTHONPATH для видимости пакета app
+RUN chown -R appuser:appuser /src
+
+USER root
+RUN apt-get update && apt-get install -y curl ca-certificates && rm -rf /var/lib/apt/lists/*
+USER appuser
+
 ENV PYTHONPATH=/src
 
-# Опционально создаем виртуальное окружение (если нужно)
 RUN uv venv
 
-# Запускаем бот
 CMD ["uv", "run", "app/main.py"]
-
-## ХУЙНЯ НАПИСАННАЯ ГПТ, БЫЛО В ПАДЛУ!

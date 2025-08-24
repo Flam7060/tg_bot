@@ -1,5 +1,6 @@
-from deep_translator import GoogleTranslator
 from functools import wraps
+
+from deep_translator import GoogleTranslator
 
 
 def translate_text(text: str, target_lang="en", source_lang="auto") -> str:
@@ -13,9 +14,7 @@ def translate_text(text: str, target_lang="en", source_lang="auto") -> str:
     if not isinstance(text, str):
         return text  # переводим только строки
     try:
-        translated = GoogleTranslator(source=source_lang, target=target_lang).translate(
-            text
-        )
+        translated = GoogleTranslator(source=source_lang, target=target_lang).translate(text)
         return translated
     except Exception as e:
         print(f"Ошибка перевода: {e}")
@@ -33,9 +32,7 @@ def translate_output(target_lang="en", source_lang="auto"):
         @wraps(func)
         def wrapper(*args, **kwargs):
             result = func(*args, **kwargs)
-            return translate_text(
-                result, target_lang=target_lang, source_lang=source_lang
-            )
+            return translate_text(result, target_lang=target_lang, source_lang=source_lang)
 
         return wrapper
 

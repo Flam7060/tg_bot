@@ -1,11 +1,10 @@
+from typing import Any, Dict, Optional, Union
+
 import requests
-from typing import Optional, Dict, Any, Union
 
 
 class BaseApiClient:
-    def __init__(
-        self, base_url: str, headers: Optional[Dict[str, str]] = None, timeout: int = 10
-    ):
+    def __init__(self, base_url: str, headers: Optional[Dict[str, str]] = None, timeout: int = 10):
         self.base_url = base_url.rstrip("/")
         self.headers = headers or {}
         self.timeout = timeout
@@ -67,7 +66,5 @@ class BaseApiClient:
     ) -> Optional[requests.Response]:
         return self._request("PUT", endpoint, data=data, json=json, headers=headers)
 
-    def delete(
-        self, endpoint: str, headers: Optional[Dict[str, str]] = None
-    ) -> Optional[requests.Response]:
+    def delete(self, endpoint: str, headers: Optional[Dict[str, str]] = None) -> Optional[requests.Response]:
         return self._request("DELETE", endpoint, headers=headers)

@@ -1,6 +1,7 @@
 from typing import Optional
-from app.services.base_api import BaseApiClient
+
 from app.services.astrology.schemas import HoroscopeResponse, ZodiacSign
+from app.services.base_api import BaseApiClient
 from app.services.utils.translator import translate_text
 
 
@@ -25,9 +26,7 @@ class HoroscopeApiClient(BaseApiClient):
 if "name" == "__main__":
     from app.config import configs
 
-    horoscop = HoroscopeApiClient(
-        configs.ninja.base_url, configs.ninja.api_key.get_secret_value()
-    )
+    horoscop = HoroscopeApiClient(configs.ninja.base_url, configs.ninja.api_key.get_secret_value())
     horoscope_response = horoscop.get_horoscope(ZodiacSign.leo)
     if horoscope_response is not None:
         translated_text = translate_text(horoscope_response.horoscope, target_lang="ru")

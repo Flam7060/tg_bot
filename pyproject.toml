@@ -16,3 +16,20 @@ dependencies = [
 dev = [
     "ruff>=0.12.9",
 ]
+
+# Ruff linter configuration
+[tool.ruff]
+line-length = 120
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "N", "UP", "B", "C4"]
+ignore = ["E501", "W503"]
+
+
+
+# Black code formatter configuration
+[tool.black]
+line-length = 120
+target-version = ['py312']
+include = '\.pyi?$'

@@ -27,6 +27,7 @@ ENV/
 nosetests.xml
 coverage.xml
 *.cover
+megalinter-reports
 
 # Jupyter Notebook
 .ipynb_checkpoints

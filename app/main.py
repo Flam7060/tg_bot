@@ -1,7 +1,7 @@
 import asyncio
-from app.config import configs
-from app.bot.create_bot import create_bot
 
+from app.bot.create_bot import create_bot
+from app.config import configs
 
 if __name__ == "__main__":
     print()

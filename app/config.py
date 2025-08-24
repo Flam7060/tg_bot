@@ -3,7 +3,6 @@ from pathlib import Path
 from pydantic import Field, SecretStr
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
-
 # docs
 # https://habr.com/ru/articles/866536/
 # https://docs.pydantic.dev/latest/concepts/pydantic_settings/
@@ -14,9 +13,7 @@ env_path = Path(__file__).parent.parent / ".env"
 
 
 class ConfigBase(BaseSettings):
-    model_config = SettingsConfigDict(
-        env_file=str(env_path), env_file_encoding="utf-8", extra="ignore"
-    )
+    model_config = SettingsConfigDict(env_file=str(env_path), env_file_encoding="utf-8", extra="ignore")
 
 
 class TelegramConfig(ConfigBase):

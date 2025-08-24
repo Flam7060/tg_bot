@@ -1,6 +1,6 @@
-from pydantic import ValidationError
-from app.services.get_animals.schemas.cat_schema import CatInfo
 from app.services.base_api import BaseApiClient
+from app.services.get_animals.schemas.cat_schema import CatInfo
+from pydantic import ValidationError
 
 
 class CatApiClient(BaseApiClient):
