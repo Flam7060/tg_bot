@@ -1,24 +1,120 @@
-name: linter
+name: MegaLinter
 
 on: [push, pull_request]
-#  Я не уверен что здесь нужен Ruff, он вроде есть в megalinter 
+
 jobs:
-
-  ruff:
-    runs-on: ubuntu-latest
-    steps:
-    - uses: actions/checkout@v4
-    - uses: astral-sh/ruff-action@v3
-      with:
-        args: check .
-        fix_args: fix .
-
   megalinter:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Run MegaLinter
-      uses: oxsecurity/megalinter@v8.8.0
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          
+      - name: Run MegaLinter
+        uses: oxsecurity/megalinter@v8.8.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          
+          # Включить только нужные линтеры
+          ENABLE_LINTERS: >
+            PYTHON_RUFF,
+            PYTHON_MYPY,
+            PYTHON_BLACK,
+            PYTHON_ISORT,
+            PYTHON_BANDIT,
+            MARKDOWN_MARKDOWNLINT,
+            JSON_PRETTIER,
+            YAML_PRETTIER,
+            YAML_YAMLLINT,
+            REPOSITORY_GITLEAKS,
+            REPOSITORY_TRUFFLEHOG,
+            REPOSITORY_SECRETLINT,
+            DOCKERFILE_HADOLINT,
+            SPELL_CSPELL,
+            COPYPASTE_JSCPD
+          
+          # CSpell конфигурация прямо в env
+          SPELL_CSPELL_CONFIG_CONTENT: |
+            {
+              "version": "0.2",
+              "language": "en,ru",
+              "dictionaries": ["russian", "ru_ru", "software-terms"],
+              "ignorePaths": ["node_modules/**", ".git/**", "**/*.pyc", "**/.megalinter-reports/**"],
+              "words": ["megalinter", "dockerfile", "hadolint", "yamllint", "gitleaks", "bandit"],
+              "allowCompoundWords": true,
+              "minWordLength": 3
+            }
+          SPELL_CSPELL_PRE_COMMANDS: |
+            npm install -g @cspell/dict-ru_ru
+          
+          # Ruff конфигурация
+          PYTHON_RUFF_CONFIG_CONTENT: |
+            [tool.ruff]
+            line-length = 120
+            target-version = "py312"
+            
+            [tool.ruff.lint]
+            select = ["E", "F", "W", "I", "N", "UP", "B", "C4"]
+            ignore = ["E501", "W503"]
+            
+            [tool.ruff.format]
+            quote-style = "double"
+            indent-style = "space"
+          
+          # MyPy конфигурация
+          PYTHON_MYPY_CONFIG_CONTENT: |
+            [mypy]
+            python_version = 3.12
+            warn_return_any = True
+            warn_unused_configs = True
+            ignore_missing_imports = True
+            
+          # Black конфигурация
+          PYTHON_BLACK_CONFIG_CONTENT: |
+            [tool.black]
+            line-length = 120
+            target-version = ['py312']
+            include = '\.pyi?$'
+            
+          # Bandit конфигурация
+          PYTHON_BANDIT_CONFIG_CONTENT: |
+            [bandit]
+            exclude_dirs = ["tests", "test"]
+            skips = ["B101", "B601"]
+            
+          # Markdownlint конфигурация
+          MARKDOWN_MARKDOWNLINT_CONFIG_CONTENT: |
+            {
+              "MD013": false,
+              "MD033": false,
+              "MD041": false
+            }
+            
+          # yamllint конфигурация
+          YAML_YAMLLINT_CONFIG_CONTENT: |
+            extends: default
+            rules:
+              line-length:
+                max: 120
+              indentation:
+                spaces: 2
+              comments:
+                min-spaces-from-content: 1
+                
+          # jscpd конфигурация  
+          COPYPASTE_JSCPD_CONFIG_CONTENT: |
+            {
+              "threshold": 10,
+              "reporters": ["html", "console"],
+              "ignore": ["**/*.min.js", "**/node_modules/**"],
+              "minLines": 5,
+              "minTokens": 70
+            }
+          COPYPASTE_JSCPD_ARGUMENTS: "--gitignore"
+          
+          # Общие настройки
+          APPLY_FIXES: none  # или 'all' если хотите автофиксы
+          DEFAULT_BRANCH: main
+          FILEIO_REPORTER: false
+          GITHUB_STATUS_REPORTER: true
+          UPDATED_SOURCES_REPORTER: false
