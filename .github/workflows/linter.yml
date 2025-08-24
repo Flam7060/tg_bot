@@ -30,22 +30,7 @@ jobs:
             REPOSITORY_TRUFFLEHOG,
             REPOSITORY_SECRETLINT,
             DOCKERFILE_HADOLINT,
-            SPELL_CSPELL,
             COPYPASTE_JSCPD
-          
-          # CSpell конфигурация прямо в env
-          SPELL_CSPELL_CONFIG_CONTENT: |
-            {
-              "version": "0.2",
-              "language": "en,ru",
-              "dictionaries": ["russian", "ru_ru", "software-terms"],
-              "ignorePaths": ["node_modules/**", ".git/**", "**/*.pyc", "**/.megalinter-reports/**"],
-              "words": ["megalinter", "dockerfile", "hadolint", "yamllint", "gitleaks", "bandit"],
-              "allowCompoundWords": true,
-              "minWordLength": 3
-            }
-          SPELL_CSPELL_PRE_COMMANDS: |
-            npm install -g @cspell/dict-ru_ru
           
           # Ruff конфигурация
           PYTHON_RUFF_CONFIG_CONTENT: |
